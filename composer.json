@@ -1,0 +1,21 @@
+ {
+    "name": "marks/braintree-cashier",
+    "description": "This package provides fluent interface to Braintree service",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marek Galovic",
+            "email": "mail@marekgalovic.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.0",
+        "braintree/braintree_php" : "3.6.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Marks\\BraintreeCashier\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
