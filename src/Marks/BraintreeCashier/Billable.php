@@ -15,14 +15,29 @@ trait Billable
         return $result;
     }
 
-    public function subscription($plan)
+    public function subscription($plan = null)
     {
         return new BraintreeGateway($this, $plan);
     }
 
     public function getBraintreeId()
     {
-        return md5($this->id).'csd';
+        return $this->braintree_id;
+    }
+
+    public function getBraintreePlan()
+    {
+        return $this->braintree_plan;
+    }
+
+    public function getBraintreeSubscriptionId()
+    {
+        return $this->braintree_subscription_id;
+    }
+
+    public function getBraintereSubscriptionStatus()
+    {
+        return $this->braintree_subscription_status;
     }
 
     public function getBraintreeFirstName()
@@ -38,5 +53,30 @@ trait Billable
     public function getBraintreeEmail()
     {
         return $this->email;
+    }
+
+    public function subscribed()
+    {
+        return $this->subscription_ends_at->isFuture();  
+    }
+
+    public function onTrial()
+    {
+        return $this->trial_ends_at->isFuture();
+    }
+
+    public function onGracePeriod()
+    {
+        return ($this->cancelled()&&$this->subscribed());
+    }
+
+    public function onPlan($plan)
+    {
+        return ($this->getBrainterePlan() === $plan);
+    }
+
+    public function cancelled()
+    {
+        return ($this->getBraintereSubscriptionStatus() === 'Canceled');
     }
 }
